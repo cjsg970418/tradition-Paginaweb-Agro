@@ -1,0 +1,101 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role
+  totpSecret String?
+  createdAt DateTime @default(now())
+}
+enum Role {
+  ADMIN
+  ANALISTA
+  AFILIADO
+}
+model Producto {
+  id   Int    @id @default(autoincrement())
+  nombre String @unique
+}
+model Region {
+  id      Int    @id @default(autoincrement())
+  nombre  String
+  ciudad  String
+  lat     Float
+  lng     Float
+}
+model PrecioSpot {
+  id         Int      @id @default(autoincrement())
+  productoId Int
+  regionId   Int
+  fecha      DateTime
+  compra     Float
+  venta      Float
+  variacion  Float
+  outlier    Boolean
+  producto   Producto @relation(fields: [productoId], references: [id])
+  region     Region   @relation(fields: [regionId], references: [id])
+}
+model PrecioFuturo {
+  id         Int      @id @default(autoincrement())
+  productoId Int
+  regionId   Int
+  fecha      DateTime
+  vencimiento DateTime
+  base       Float
+  carry      Float
+  producto   Producto @relation(fields: [productoId], references: [id])
+  region     Region   @relation(fields: [regionId], references: [id])
+}
+model Estacionalidad {
+  id         Int      @id @default(autoincrement())
+  productoId Int
+  regionId   Int
+  mes        Int
+  promedio5a Float
+  p10        Float
+  p50        Float
+  p90        Float
+  producto   Producto @relation(fields: [productoId], references: [id])
+  region     Region   @relation(fields: [regionId], references: [id])
+}
+model Indice {
+  id      Int    @id @default(autoincrement())
+  nombre  String
+  ponderacion Float
+}
+model IndiceValor {
+  id        Int      @id @default(autoincrement())
+  indiceId  Int
+  fecha     DateTime
+  valor     Float
+  indice    Indice   @relation(fields: [indiceId], references: [id])
+}
+model Norma {
+  id      Int    @id @default(autoincrement())
+  nombre  String
+  descripcion String
+}
+model PQR {
+  id        Int      @id @default(autoincrement())
+  radicado  String   @unique
+  nombre    String
+  email     String
+  mensaje   String
+  estado    String
+  createdAt DateTime @default(now())
+}
+model ArchivoExport {
+  id        Int      @id @default(autoincrement())
+  tipo      String
+  usuarioId Int
+  fecha     DateTime @default(now())
+  watermark String
+  usuario   User     @relation(fields: [usuarioId], references: [id])
+}

@@ -1,0 +1,13 @@
+name: Feature Request
+description: Solicita una mejora
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Solo para solicitudes de funcionalidad.**
+  - type: textarea
+    id: description
+    attributes:
+      label: Descripción
+      required: true

@@ -1,0 +1,18 @@
+name: PQR
+description: Solicitud, Queja o Reclamo
+labels: [pqr]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Solo para PQR.**
+  - type: input
+    id: radicado
+    attributes:
+      label: Radicado (si aplica)
+      required: false
+  - type: textarea
+    id: mensaje
+    attributes:
+      label: Mensaje
+      required: true

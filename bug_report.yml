@@ -1,0 +1,14 @@
+name: Bug Report
+description: Reporta un bug en tradition-agro
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Solo para reporte de bugs.**
+  - type: textarea
+    id: description
+    attributes:
+      label: Descripción
+      description: Describe el problema y cómo reproducirlo.
+      required: true
